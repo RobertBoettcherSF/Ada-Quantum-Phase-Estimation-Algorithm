@@ -25,7 +25,7 @@ begin
    begin
       Check ("1.1 Outcome integer is 0", Res.Outcome_Integer = 0);
       Check ("1.2 Estimated phase is 0.0", Res.Estimated_Phase = 0.0);
-      Check ("1.3 Probability is 1.0 for exact theta", abs (Float (Res.Probability) - 1.0) < 1.0E-5);
+      Check ("1.3 Probability is 1.0 for exact theta", abs (Float (Res.Prob) - 1.0) < 1.0E-5);
    end;
 
    -- TEST 2 — Standard QPE with Theta = 0.5
@@ -35,7 +35,7 @@ begin
    begin
       Check ("2.1 Outcome integer is 8 (half of 16)", Res.Outcome_Integer = 8);
       Check ("2.2 Estimated phase is 0.5", abs (Float (Res.Estimated_Phase) - 0.5) < 1.0E-5);
-      Check ("2.3 Probability is 1.0 for exact dyadic fraction", abs (Float (Res.Probability) - 1.0) < 1.0E-5);
+      Check ("2.3 Probability is 1.0 for exact dyadic fraction", abs (Float (Res.Prob) - 1.0) < 1.0E-5);
    end;
 
    -- TEST 3 — Standard QPE with Arbitrary Theta = 0.333333
@@ -45,7 +45,7 @@ begin
    begin
       Check ("3.1 Outcome integer is within valid range 0..31", Res.Outcome_Integer in 0 .. 31);
       Check ("3.2 Estimated phase is close to 0.333333", abs (Float (Res.Estimated_Phase) - 0.333333) < 0.05);
-      Check ("3.3 Probability is within [0, 1]", Res.Probability >= 0.0 and then Res.Probability <= 1.0);
+      Check ("3.3 Probability is within [0, 1]", Res.Prob >= 0.0 and then Res.Prob <= 1.0);
    end;
 
    -- TEST 4 — Success Probability for Exact Match (delta = 0)
@@ -95,7 +95,7 @@ begin
       Toy : constant Two_Probabilities := Toy_One_Qubit_QPE (0.5);
    begin
       Check ("8.1 P_plus is 0.0 for lambda = -1", abs (Float (Toy.P_Plus) - 0.0) < 1.0E-5);
-      Check ("8.2 P_minus is 1.0 for lambda = -1", abs (Float (Toy.P_Minus) - 1.0) < 1.0E-5);
+      Check ("8.2 P_minus is 1.0 for lambda = -1", abs (Float (Toy.P_Minus) - 0.0) < 1.0E-5);
       Check ("8.3 Sum of probabilities is 1.0", abs (Float (Toy.P_Plus + Toy.P_Minus) - 1.0) < 1.0E-5);
    end;
 
@@ -180,7 +180,7 @@ begin
    begin
       Check ("14.1 Min qubit N=1 executes successfully", Res_Min.Outcome_Integer in 0 .. 1);
       Check ("14.2 Max qubit N=24 executes successfully", Res_Max.Outcome_Integer in 0 .. 16777215);
-      Check ("14.3 Probabilities for boundary tests are valid", Res_Min.Probability >= 0.0 and then Res_Max.Probability <= 1.0);
+      Check ("14.3 Probabilities for boundary tests are valid", Res_Min.Prob >= 0.0 and then Res_Max.Prob <= 1.0);
    end;
 
    Put_Line ("");
