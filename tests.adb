@@ -115,7 +115,9 @@ begin
       N : constant Qubit_Count := Required_Qubits (0.001);
    begin
       Check ("10.1 Required qubits >= 10 for epsilon = 0.001", N >= 10);
+      pragma Warnings (Off, "explicit membership test may be optimized away");
       Check ("10.2 Required qubits within valid range", N in 1 .. 24);
+      pragma Warnings (On, "explicit membership test may be optimized away");
       Check ("10.3 Required qubits correct order of magnitude", N <= 15);
    end;
 
@@ -125,7 +127,9 @@ begin
       N : constant Qubit_Count := Required_Qubits (0.01);
    begin
       Check ("11.1 Required qubits >= 7 for epsilon = 0.01", N >= 7);
+      pragma Warnings (Off, "explicit membership test may be optimized away");
       Check ("11.2 Required qubits within valid range", N in 1 .. 24);
+      pragma Warnings (On, "explicit membership test may be optimized away");
       Check ("11.3 Required qubits <= 10", N <= 10);
    end;
 
@@ -158,7 +162,7 @@ begin
       exception
          when Invalid_Phase =>
             Negative_Caught := True;
-      end;
+      end:
 
       begin
          Validate_Phase (1.0);
