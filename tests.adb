@@ -178,8 +178,8 @@ begin
       Res_Min : constant QPE_Result := Simulate_QPE (1, 0.25);
       Res_Max : constant QPE_Result := Simulate_QPE (24, 0.123456);
    begin
-      Check ("14.1 Min qubit N=1 executes successfully", Res_Min.Outcome_Integer in 0 .. 1);
-      Check ("14.2 Max qubit N=24 executes successfully", Res_Max.Outcome_Integer in 0 .. 16777215);
+      Check ("14.1 Min qubit N=1 executes successfully", Res_Min.Outcome_Integer <= 1);
+      Check ("14.2 Max qubit N=24 executes successfully", Res_Max.Outcome_Integer <= 16777215);
       Check ("14.3 Probabilities for boundary tests are valid", Res_Min.Prob >= 0.0 and then Res_Max.Prob <= 1.0);
    end;
 
