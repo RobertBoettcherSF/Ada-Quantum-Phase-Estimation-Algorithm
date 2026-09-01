@@ -24,7 +24,7 @@ package body Quantum_Phase_Estimation is
    end Two_Power_Nat;
 
    -- Validate phase procedure
-   procedure Validate_Phase (Theta : Phase) is
+   procedure Validate_Phase (Theta : Float) is
    begin
       if Theta < 0.0 or else Theta >= 1.0 then
          raise Invalid_Phase;
@@ -62,7 +62,7 @@ package body Quantum_Phase_Estimation is
       return (
          Outcome_Integer => A,
          Estimated_Phase => Phase (Float (A) / Two_N_F),
-         Probability     => Prob
+         Prob            => Prob
       );
    end Simulate_QPE;
 
