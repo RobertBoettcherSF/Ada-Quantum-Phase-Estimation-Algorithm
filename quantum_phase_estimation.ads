@@ -17,7 +17,7 @@ package Quantum_Phase_Estimation is
    type QPE_Result is record
       Outcome_Integer : Natural;
       Estimated_Phase : Phase;
-      Probability     : Probability;
+      Prob            : Probability;
    end record;
 
    -- Record holding probabilities for 1-qubit toy QPE
@@ -33,8 +33,8 @@ package Quantum_Phase_Estimation is
    ) return QPE_Result
    with
       Pre  => N in 1 .. 24 and then Theta >= 0.0 and then Theta < 1.0,
-      Post => Simulate_QPE'Result.Probability >= 0.0
-              and then Simulate_QPE'Result.Probability <= 1.0;
+      Post => Simulate_QPE'Result.Prob >= 0.0
+              and then Simulate_QPE'Result.Prob <= 1.0;
 
    -- Variant 2: Compute exact success probability Pr(a) for measurement outcome a
    function Compute_Success_Probability (
@@ -59,7 +59,7 @@ package Quantum_Phase_Estimation is
               and then Toy_One_Qubit_QPE'Result.P_Plus >= 0.0
               and then Toy_One_Qubit_QPE'Result.P_Minus >= 0.0;
 
-   -- Variant 4: Calculate required qubits for target additive error epsilon
+   -- Variant 4: Required qubits for target additive error epsilon
    function Required_Qubits (
       Epsilon : Float
    ) return Qubit_Count
@@ -68,6 +68,6 @@ package Quantum_Phase_Estimation is
       Post => Required_Qubits'Result in 1 .. 24;
 
    -- Helper function: Validate phase range
-   procedure Validate_Phase (Theta : Phase);
+   procedure Validate_Phase (Theta : Float);
 
 end Quantum_Phase_Estimation;
