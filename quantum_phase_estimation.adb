@@ -7,7 +7,8 @@ package body Quantum_Phase_Estimation is
    function Two_Power (N : Qubit_Count) return Float is
       Result : Float := 1.0;
    begin
-      for _ in 1 .. N loop
+      for I in 1 .. N loop
+         pragma Unreferenced (I);
          Result := Result * 2.0;
       end loop;
       return Result;
@@ -17,7 +18,8 @@ package body Quantum_Phase_Estimation is
    function Two_Power_Nat (N : Qubit_Count) return Natural is
       Res : Natural := 1;
    begin
-      for _ in 1 .. N loop
+      for I in 1 .. N loop
+         pragma Unreferenced (I);
          Res := Res * 2;
       end loop;
       return Res;
@@ -73,18 +75,18 @@ package body Quantum_Phase_Estimation is
       A     : Natural
    ) return Probability is
       Two_N_F : constant Float := Two_Power (N);
-      Delta : constant Float := Float (Theta) - Float (A) / Two_N_F;
+      Delta_Val : constant Float := Float (Theta) - Float (A) / Two_N_F;
       Pi : constant Float := Ada.Numerics.Pi;
    begin
       -- If delta is extremely close to zero, probability is 1.0
-      if abs (Delta) < 1.0E-12 then
+      if abs (Delta_Val) < 1.0E-12 then
          return 1.0;
       end if;
 
       -- Formula: Pr(a) = (1 / 2^2n) * (sin^2(pi * 2^n * delta) / sin^2(pi * delta))
       declare
-         Numerator_Arg : constant Float := Pi * Two_N_F * Delta;
-         Denominator_Arg : constant Float := Pi * Delta;
+         Numerator_Arg : constant Float := Pi * Two_N_F * Delta_Val;
+         Denominator_Arg : constant Float := Pi * Delta_Val;
          Sin_Num : constant Float := Sin (Numerator_Arg);
          Sin_Den : constant Float := Sin (Denominator_Arg);
          Two_2n : constant Float := Two_N_F * Two_N_F;
