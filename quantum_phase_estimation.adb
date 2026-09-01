@@ -7,7 +7,7 @@ package body Quantum_Phase_Estimation is
    function Two_Power (N : Qubit_Count) return Float is
       Result : Float := 1.0;
    begin
-      for I in 1 .. N loop
+      for _ in 1 .. N loop
          Result := Result * 2.0;
       end loop;
       return Result;
@@ -17,7 +17,7 @@ package body Quantum_Phase_Estimation is
    function Two_Power_Nat (N : Qubit_Count) return Natural is
       Res : Natural := 1;
    begin
-      for I in 1 .. N loop
+      for _ in 1 .. N loop
          Res := Res * 2;
       end loop;
       return Res;
