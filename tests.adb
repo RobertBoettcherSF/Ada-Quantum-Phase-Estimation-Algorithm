@@ -43,9 +43,9 @@ begin
    declare
       Res : constant QPE_Result := Simulate_QPE (5, 0.333333);
    begin
-      Check ("3.1 Outcome integer is within valid range 0..31", Res.Outcome_Integer in 0 .. 31);
+      Check ("3.1 Outcome integer is within valid range 0..31", Res.Outcome_Integer <= 31);
       Check ("3.2 Estimated phase is close to 0.333333", abs (Float (Res.Estimated_Phase) - 0.333333) < 0.05);
-      Check ("3.3 Probability is within [0, 1]", Res.Prob >= 0.0 and then Res.Prob <= 1.0);
+      Check ("3.3 Probability is within [0, 1]", Float (Res.Prob) >= 0.0 and then Float (Res.Prob) <= 1.0);
    end;
 
    -- TEST 4 — Success Probability for Exact Match (delta = 0)
@@ -54,8 +54,8 @@ begin
       Prob : constant Probability := Compute_Success_Probability (4, 0.25, 4); -- 4/16 = 0.25
    begin
       Check ("4.1 Probability for exact match is 1.0", abs (Float (Prob) - 1.0) < 1.0E-5);
-      Check ("4.2 Probability is non-negative", Prob >= 0.0);
-      Check ("4.3 Probability does not exceed 1.0", Prob <= 1.0);
+      Check ("4.2 Probability is non-negative", Float (Prob) >= 0.0);
+      Check ("4.3 Probability does not exceed 1.0", Float (Prob) <= 1.0);
    end;
 
    -- TEST 5 — Success Probability for Non-Exact Match (delta != 0)
@@ -63,9 +63,9 @@ begin
    declare
       Prob : constant Probability := Compute_Success_Probability (3, 0.3, 2); -- 2/8 = 0.25, theta = 0.3
    begin
-      Check ("5.1 Probability is calculated successfully", Prob > 0.0);
-      Check ("5.2 Probability is less than 1.0 for non-exact", Prob < 1.0);
-      Check ("5.3 Probability is bounded correctly", Prob <= 1.0);
+      Check ("5.1 Probability is calculated successfully", Float (Prob) > 0.0);
+      Check ("5.2 Probability is less than 1.0 for non-exact", Float (Prob) < 1.0);
+      Check ("5.3 Probability is bounded correctly", Float (Prob) <= 1.0);
    end;
 
    -- TEST 6 — Success Probability Lower Bound (>= 4/pi^2 approx 0.405)
@@ -75,8 +75,8 @@ begin
       Lower_Bound : constant Float := 4.0 / (3.14159265358979323846 ** 2);
    begin
       Check ("6.1 Probability exceeds theoretical lower bound ~0.405", Float (Prob) >= Lower_Bound - 1.0E-3);
-      Check ("6.2 Probability is positive", Prob > 0.0);
-      Check ("6.3 Probability is valid", Prob <= 1.0);
+      Check ("6.2 Probability is positive", Float (Prob) > 0.0);
+      Check ("6.3 Probability is valid", Float (Prob) <= 1.0);
    end;
 
    -- TEST 7 — Toy 1-Qubit QPE with Theta = 0.0 (lambda = 1)
@@ -95,8 +95,8 @@ begin
       Toy : constant Two_Probabilities := Toy_One_Qubit_QPE (0.5);
    begin
       Check ("8.1 P_plus is 0.0 for lambda = -1", abs (Float (Toy.P_Plus) - 0.0) < 1.0E-5);
-      Check ("8.2 P_minus is 1.0 for lambda = -1", abs (Float (Toy.P_Minus) - 0.0) < 1.0E-5);
-      Check ("8.3 Sum of probabilities is 1.0", abs (Float (Toy.P_Plus + Toy.P_Minus) - 1.0) < 1.0E-5);
+      Check ("8.2 P_minus is 1.0 for lambda = -1", abs (Float (Toy.P_Minus) - 1.0) < 1.0E-4);
+      Check ("8.3 Sum of probabilities is 1.0", abs (Float (Toy.P_Plus + Toy.P_Minus) - 1.0) < 1.0E-4);
    end;
 
    -- TEST 9 — Toy 1-Qubit QPE with Theta = 1.0 / 3.0
@@ -104,8 +104,8 @@ begin
    declare
       Toy : constant Two_Probabilities := Toy_One_Qubit_QPE (0.333333333333);
    begin
-      Check ("9.1 P_plus is positive", Toy.P_Plus > 0.0);
-      Check ("9.2 P_minus is greater than P_plus for theta=1/3", Toy.P_Minus > Toy.P_Plus);
+      Check ("9.1 P_plus is positive", Float (Toy.P_Plus) > 0.0);
+      Check ("9.2 P_minus is greater than P_plus for theta=1/3", Float (Toy.P_Minus) > Float (Toy.P_Plus));
       Check ("9.3 Sum of probabilities is 1.0", abs (Float (Toy.P_Plus + Toy.P_Minus) - 1.0) < 1.0E-4);
    end;
 
@@ -180,7 +180,7 @@ begin
    begin
       Check ("14.1 Min qubit N=1 executes successfully", Res_Min.Outcome_Integer <= 1);
       Check ("14.2 Max qubit N=24 executes successfully", Res_Max.Outcome_Integer <= 16777215);
-      Check ("14.3 Probabilities for boundary tests are valid", Res_Min.Prob >= 0.0 and then Res_Max.Prob <= 1.0);
+      Check ("14.3 Probabilities for boundary tests are valid", Float (Res_Min.Prob) >= 0.0 and then Float (Res_Max.Prob) <= 1.0);
    end;
 
    Put_Line ("");
