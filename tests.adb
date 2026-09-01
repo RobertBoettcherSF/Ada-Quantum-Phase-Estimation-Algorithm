@@ -162,7 +162,7 @@ begin
       exception
          when Invalid_Phase =>
             Negative_Caught := True;
-      end:
+      end;
 
       begin
          Validate_Phase (1.0);
